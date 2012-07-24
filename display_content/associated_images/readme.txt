@@ -49,8 +49,6 @@ To print images, use these code examples.
 Place them in required place of your theme (eg ip_themes/ip_default/main.php):
 
 <?php
-
-<?php
   //get images, associated to current language
   require_once(BASE_DIR.PLUGIN_DIR.'display_content/associated_images/db.php');
   $images = \Modules\display_content\associated_images\Db::getLanguageImages();
@@ -68,11 +66,18 @@ Place them in required place of your theme (eg ip_themes/ip_default/main.php):
   $images = \Modules\display_content\associated_images\Db::getElementImages();
 ?>
 
-Each of these three functions returns an array of images. Because each page might have
+<?php
+  // get images in breadcrumb. Script starts looking from current page, then goes up using
+  // breadcrumb looking for associated images. Stops immediately when finds some.
+  require_once(BASE_DIR.PLUGIN_DIR.'display_content/associated_images/db.php');
+  $images = \Modules\display_content\associated_images\Db::getBreadcrumbImages();
+?>
+
+Each of these functions returns an array of images. Because each page might have
 many images associated to it.
 
 
-This script will display first immage associated to current page. So if you will
+This script will display first image associated to current page. So if you will
 add this code to ip_themes/ip_default/main.php, you will see new image on each page
 (Don't forget to add those images in DisplayContent -> AssociatedImages tab in administration panel).
 <?php
@@ -108,7 +113,7 @@ require_once(BASE_DIR.PLUGIN_DIR.'display_content/associated_images/db.php');
 $images = \Modules\display_content\associated_images\Db::getLanguageImages($languageId);
 $images = \Modules\display_content\associated_images\Db::getZoneImages($languageId, $zoneName);
 $images = \Modules\display_content\associated_images\Db::getElementImages($element);
-
+$images = \Modules\display_content\associated_images\Db::getBreadcrumbImages($element);
 
 ?>
 
